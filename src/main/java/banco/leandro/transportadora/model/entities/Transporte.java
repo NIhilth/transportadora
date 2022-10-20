@@ -2,10 +2,7 @@ package banco.leandro.transportadora.model.entities;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,8 +13,9 @@ import javax.persistence.Table;
 @Table(name = "transporte")
 public class Transporte {
     @Id
-    @Column(nullable = false, unique = true)
-    private Integer numero;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false)
+    private Integer idTransporte;
 
     @Column(nullable = false)
     private Integer quantidadeAcentos;

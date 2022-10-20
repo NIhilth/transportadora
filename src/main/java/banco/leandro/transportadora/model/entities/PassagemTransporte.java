@@ -14,13 +14,13 @@ import javax.persistence.*;
 public class PassagemTransporte {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false, unique = true)
+    @Column(nullable = false)
     private Integer idPassagemTransporte;
 
     @Column(nullable = false)
     private Integer acento;
 
-    @Column
+    @Column(nullable = false)
     private Estado estado;
 
     @ManyToOne

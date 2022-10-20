@@ -2,10 +2,7 @@ package banco.leandro.transportadora.model.entities;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Time;
 
@@ -17,14 +14,18 @@ import java.sql.Time;
 @Entity
 @Table(name = "transporteTrajeto")
 public class TransporteTrajeto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false)
+    private Integer idTransporteTrajeto;
 
     @ManyToOne
     @Column(nullable = false, unique = true)
-    private Integer transporteNumero;
+    private Transporte transporte;
 
     @ManyToOne
     @Column(nullable = false, unique = true)
-    private Integer linhaId;
+    private Trajeto trajeto;
 
     @Column(nullable = false)
     private Time horarioIda;

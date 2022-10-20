@@ -1,13 +1,16 @@
 package banco.leandro.transportadora.DTO;
 
+import banco.leandro.transportadora.model.entities.Trajeto;
+import banco.leandro.transportadora.model.entities.Transporte;
+
 import java.sql.Date;
 import java.sql.Time;
 
 public class TransporteTrajetoDTO {
 
-    private Integer transporteNumero;
+    private Transporte transporte;
 
-    private Integer linhaId;
+    private Trajeto trajeto;
 
     private Time horarioIda;
 

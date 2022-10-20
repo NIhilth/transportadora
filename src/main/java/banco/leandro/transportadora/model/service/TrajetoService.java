@@ -2,11 +2,13 @@ package banco.leandro.transportadora.model.service;
 
 import banco.leandro.transportadora.model.entities.Trajeto;
 import banco.leandro.transportadora.repository.TrajetoRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@AllArgsConstructor
 @Service
 public class TrajetoService {
     TrajetoRepository trajetoRepository;

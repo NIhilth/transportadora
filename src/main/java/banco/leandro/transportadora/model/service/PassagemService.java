@@ -2,18 +2,16 @@ package banco.leandro.transportadora.model.service;
 
 import banco.leandro.transportadora.model.entities.Passagem;
 import banco.leandro.transportadora.repository.PassagemRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@AllArgsConstructor
 @Service
 public class PassagemService {
     private final PassagemRepository passagemRepository;
-
-    public PassagemService(PassagemRepository passagemRepository) {
-        this.passagemRepository = passagemRepository;
-    }
 
     public List<Passagem> findAll() {
         return passagemRepository.findAll();

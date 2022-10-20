@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class Passagem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false, unique = true)
+    @Column( nullable = false)
     private Integer idPassagem;
 
     @Column(nullable = false)

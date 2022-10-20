@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class Trajeto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private Id idTrajeto;
 
 }

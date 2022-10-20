@@ -14,7 +14,6 @@ import java.util.Date;
 @ToString
 @EqualsAndHashCode
 public class Reserva {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)

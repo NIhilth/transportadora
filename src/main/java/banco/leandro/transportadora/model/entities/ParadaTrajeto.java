@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class ParadaTrajeto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private Integer idParadaTrajeto;
 
     @ManyToOne
