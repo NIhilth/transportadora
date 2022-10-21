@@ -48,7 +48,7 @@ public class TransporteController {
         }
         Transporte transporte = transporteService.findById(numero).get();
         BeanUtils.copyProperties(transporteDTO, transporte);
-        transporte.setNumero(numero);
+        transporte.setIdTransporte(numero);
         return ResponseEntity.status(HttpStatus.OK).body(transporteService.save(transporte));
     }
 

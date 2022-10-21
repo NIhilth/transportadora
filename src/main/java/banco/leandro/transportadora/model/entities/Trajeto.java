@@ -17,6 +17,6 @@ public class Trajeto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
-    private Id idTrajeto;
+    private Integer idTrajeto;
 
 }

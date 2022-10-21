@@ -27,18 +27,19 @@ public class TrajetoController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> save(@RequestBody @Valid TrajetoDTO trajetoDTO) {
+//    @RequestBody @Valid TrajetoDTO trajetoDTO
+    public ResponseEntity<Object> save() {
         Trajeto trajetoModel = new Trajeto();
-        BeanUtils.copyProperties(trajetoDTO, trajetoModel);
+//        BeanUtils.copyProperties(trajetoDTO, trajetoModel);
 
         return ResponseEntity.status(HttpStatus.OK).body(trajetoService.save(trajetoModel));
     }
 
-    @GetMapping("/id/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Object> findById(@PathVariable(value = "id") Integer id) {
         Optional<Trajeto> trajetoOptional = trajetoService.findById(id);
 
-        if (trajetoService.existsById(id)){
+        if (!trajetoService.existsById(id)){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrado " +
                     "nenhum trajeto com esse ID.");
         }
