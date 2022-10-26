@@ -37,8 +37,9 @@ public class PassagemController {
     public ResponseEntity<Object> save(@RequestBody @Valid PassagemDTO passagemDTO) {
         Passagem passagem = new Passagem();
         BeanUtils.copyProperties(passagemDTO, passagem);
+        Passagem passagemNova = passagemService.save(passagem);
 
-        return ResponseEntity.status(HttpStatus.OK).body(passagemService.save(passagem));
+        return ResponseEntity.status(HttpStatus.OK).body(passagemNova);
     }
 
     @PutMapping("/{idPassagem}")

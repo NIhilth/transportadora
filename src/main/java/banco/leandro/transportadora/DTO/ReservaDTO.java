@@ -10,9 +10,6 @@ import java.util.Date;
 
 public class ReservaDTO {
 
-    @Digits(integer = 4, fraction = 0)
-    private Integer quantidadePassagens;
-
     @Positive
     private Double valorTotal;
 

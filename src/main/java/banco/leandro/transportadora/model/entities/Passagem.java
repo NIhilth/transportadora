@@ -20,7 +20,18 @@ public class Passagem {
     @Column(nullable = false)
     private Integer portaoEmbarque;
 
+    @Column(nullable = false)
+    private Integer acento;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
+    private Estado estado;
+
     @ManyToOne
     @JoinColumn(name = "idReserva", nullable = false)
     private Reserva reserva;
+
+    @ManyToOne
+    @JoinColumn(name = "idTransporte", nullable = false)
+    private Transporte transporte;
 }
