@@ -18,7 +18,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/transportadora/transporte")
 public class TransporteController {
-
     private TransporteService transporteService;
 
     @GetMapping
@@ -26,12 +25,12 @@ public class TransporteController {
         return ResponseEntity.status(HttpStatus.OK).body(transporteService.findAll());
     }
 
-    @GetMapping("/{numero}")
-    public ResponseEntity<Object> findById(@PathVariable(value = "numero") Integer numero) {
-        if (!transporteService.existsById(numero)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrado nenhum transporte com o número informado");
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> findById(@PathVariable(value = "id") Integer id) {
+        if (!transporteService.existsById(id)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrado nenhum transporte com o id informado");
         }
-        return ResponseEntity.status(HttpStatus.OK).body(transporteService.findById(numero));
+        return ResponseEntity.status(HttpStatus.OK).body(transporteService.findById(id));
     }
 
     @PostMapping("/{dtype}")
@@ -41,23 +40,22 @@ public class TransporteController {
         return ResponseEntity.status(HttpStatus.OK).body(transporteService.save(transporteModel));
     }
 
-    @PutMapping("/{numero}")
-    public ResponseEntity<Object> edit(@PathVariable(value = "numero") Integer numero, @RequestBody @Valid TransporteDTO transporteDTO) {
-        if (!transporteService.existsById(numero)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrado nenhum transporte com o número informado");
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> edit(@PathVariable(value = "id") Integer id, @RequestBody @Valid TransporteDTO transporteDTO) {
+        if (!transporteService.existsById(id)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrado nenhum transporte com o id informado");
         }
-        Transporte transporte = transporteService.findById(numero).get();
+        Transporte transporte = transporteService.findById(id).get();
         BeanUtils.copyProperties(transporteDTO, transporte);
-        transporte.setIdTransporte(numero);
         return ResponseEntity.status(HttpStatus.OK).body(transporteService.save(transporte));
     }
 
-    @DeleteMapping("/{numero}")
-    public ResponseEntity<Object> deleteById(@PathVariable(value = "numero") Integer numero) {
-        if (!transporteService.existsById(numero)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrado nenhum transporte com o número informado");
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteById(@PathVariable(value = "id") Integer id) {
+        if (!transporteService.existsById(id)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrado nenhum transporte com o id informado");
         }
-        transporteService.deleteById(numero);
+        transporteService.deleteById(id);
         return ResponseEntity.status(HttpStatus.OK).body("Transporte deletado com sucesso");
     }
 }

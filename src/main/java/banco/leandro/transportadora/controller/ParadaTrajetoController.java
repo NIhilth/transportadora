@@ -1,6 +1,7 @@
 package banco.leandro.transportadora.controller;
 
 
+import banco.leandro.transportadora.DTO.ParadaDTO;
 import banco.leandro.transportadora.DTO.ParadaTrajetoDTO;
 import banco.leandro.transportadora.DTO.TrajetoDTO;
 import banco.leandro.transportadora.model.entities.Parada;
@@ -19,7 +20,6 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/transportadora/paradaTrajeto")
-
 public class ParadaTrajetoController {
     private ParadaTrajetoService paradaTrajetoService;
 
@@ -28,35 +28,42 @@ public class ParadaTrajetoController {
         return ResponseEntity.status(HttpStatus.FOUND).body(paradaTrajetoService.findAll());
     }
 
-    @PostMapping
-    public ResponseEntity<Object> save(@RequestBody @Valid ParadaTrajetoDTO paradaTrajetoDTO) {
-        ParadaTrajeto trajetoModel = new ParadaTrajeto();
-        BeanUtils.copyProperties(paradaTrajetoDTO, trajetoModel);
-
-        return ResponseEntity.status(HttpStatus.OK).body(paradaTrajetoService.save(trajetoModel));
-    }
-
-    @GetMapping("/id/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Object> findById(@PathVariable(value = "id") Integer id) {
-        Optional<ParadaTrajeto> trajetoOptional = paradaTrajetoService.findById(id);
-
         if (paradaTrajetoService.existsById(id)){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrado " +
-                    "nenhum trajeto com esse ID.");
+                    "nenhuma parada de trajeto com esse ID.");
         }
-        return ResponseEntity.status(HttpStatus.OK).body(trajetoOptional.get());
+        return ResponseEntity.status(HttpStatus.OK).body(paradaTrajetoService.findById(id));
     }
 
-    public boolean existsById(Integer integer) {
-        return paradaTrajetoService.existsById(integer);
+    @PostMapping
+    public ResponseEntity<Object> save(@RequestBody @Valid ParadaTrajetoDTO paradaTrajetoDTO) {
+        ParadaTrajeto paradaTrajeto = new ParadaTrajeto();
+        BeanUtils.copyProperties(paradaTrajetoDTO, paradaTrajeto);
+
+        return ResponseEntity.status(HttpStatus.OK).body(paradaTrajetoService.save(paradaTrajeto));
+    }
+
+    @PutMapping("/{idParadaTrajeto}")
+    public ResponseEntity<Object> update(@PathVariable(value = "idParadaTrajeto") Integer idParadaTrajeto, @Valid @RequestBody ParadaTrajetoDTO paradaTrajetoDto) {
+        if (!paradaTrajetoService.existsById(idParadaTrajeto)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrado nenhuma parada de trajeto com o ID informado");
+        }
+
+        ParadaTrajeto paradaTrajeto = paradaTrajetoService.findById(idParadaTrajeto).get();
+        BeanUtils.copyProperties(paradaTrajetoDto, paradaTrajeto);
+
+        return ResponseEntity.status(HttpStatus.OK).body(paradaTrajetoService.save(paradaTrajeto));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteById(@PathVariable(value = "id") Integer id) {
         if (!paradaTrajetoService.existsById(id)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrado " +
-                    "nenhum trajeto com esse ID.");
+                    "nenhuma parada de um trajeto com esse ID.");
         }
+
         paradaTrajetoService.deleteById(id);
         return ResponseEntity.status(HttpStatus.OK).body("Trajeto deletado");
     }

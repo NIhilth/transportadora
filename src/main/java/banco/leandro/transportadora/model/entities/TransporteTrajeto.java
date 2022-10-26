@@ -19,13 +19,13 @@ public class TransporteTrajeto {
     @Column(nullable = false)
     private Integer idTransporteTrajeto;
 
-//    @ManyToOne
-//    @Column(nullable = false, unique = true)
-//    private Transporte transporte;
+    @ManyToOne
+    @JoinColumn(name = "idTransporte", nullable = false, unique = true)
+    private Transporte transporte;
 
-//    @ManyToOne
-//    @Column(name = "idTrajeto", nullable = false, unique = true)
-//    private Trajeto trajeto;
+    @ManyToOne
+    @JoinColumn(name = "idTrajeto", nullable = false, unique = true)
+    private Trajeto trajeto;
 
     @Column(nullable = false)
     private Time horarioIda;

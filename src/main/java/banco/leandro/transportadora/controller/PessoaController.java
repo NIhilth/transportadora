@@ -41,16 +41,6 @@ public class PessoaController {
         return ResponseEntity.status(HttpStatus.OK).body(pessoaService.save(pessoa));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteById(@PathVariable(value = "id") Integer id) {
-        if(!pessoaService.existsById(id)){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrada nenhuma pessoa com este ID");
-        }
-
-        pessoaService.deleteById(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Pessoa deletada");
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<Object> update(@RequestBody @Valid PessoaDTO pessoaDTO, @PathVariable(value = "id") Integer id) {
         if(!pessoaService.existsById(id)){
@@ -61,5 +51,15 @@ public class PessoaController {
         BeanUtils.copyProperties(pessoaDTO, pessoa);
 
         return ResponseEntity.status(HttpStatus.OK).body(pessoaService.save(pessoa));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteById(@PathVariable(value = "id") Integer id) {
+        if(!pessoaService.existsById(id)){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrada nenhuma pessoa com este ID");
+        }
+
+        pessoaService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Pessoa deletada");
     }
 }
