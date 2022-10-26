@@ -2,8 +2,10 @@ package banco.leandro.transportadora.controller;
 
 import banco.leandro.transportadora.DTO.ReservaDTO;
 import banco.leandro.transportadora.DTO.TrajetoDTO;
+import banco.leandro.transportadora.model.entities.ParadaTrajeto;
 import banco.leandro.transportadora.model.entities.Reserva;
 import banco.leandro.transportadora.model.entities.Trajeto;
+import banco.leandro.transportadora.model.service.ParadaTrajetoService;
 import banco.leandro.transportadora.model.service.TrajetoService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -22,6 +24,7 @@ import java.util.Optional;
 
 public class TrajetoController {
     private TrajetoService trajetoService;
+    private ParadaTrajetoService paradaTrajetoService;
 
     @GetMapping
     public ResponseEntity<List<Trajeto>> findAll() {
@@ -45,7 +48,14 @@ public class TrajetoController {
         Trajeto trajetoModel = new Trajeto();
         BeanUtils.copyProperties(trajetoDTO, trajetoModel);
 
-        return ResponseEntity.status(HttpStatus.OK).body(trajetoService.save(trajetoModel));
+        Trajeto trajetoNovo = trajetoService.save(trajetoModel);
+
+        for (ParadaTrajeto paradaTrajeto : trajetoDTO.getParada()) {
+            paradaTrajeto.setTrajeto(trajetoNovo);
+            paradaTrajetoService.save(paradaTrajeto);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(trajetoNovo);
     }
 
     @PutMapping("/{idTrajeto}")
