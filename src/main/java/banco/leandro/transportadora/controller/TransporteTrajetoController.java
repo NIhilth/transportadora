@@ -28,12 +28,12 @@ public class TransporteTrajetoController {
         return ResponseEntity.status(HttpStatus.OK).body(transporteTrajetoService.findAll());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> findById(@PathVariable(value = "id") Integer id) {
-        if (!transporteTrajetoService.existsById(id)) {
+    @GetMapping("/{idTransporteTrajeto}")
+    public ResponseEntity<Object> findById(@PathVariable(value = "idTransporteTrajeto") Integer idTransporteTrajeto) {
+        if (!transporteTrajetoService.existsById(idTransporteTrajeto)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrado nenhum transporte de um trajeto com o id informado");
         }
-        return ResponseEntity.status(HttpStatus.OK).body(transporteTrajetoService.findById(id));
+        return ResponseEntity.status(HttpStatus.OK).body(transporteTrajetoService.findById(idTransporteTrajeto));
     }
 
     @PostMapping
@@ -43,23 +43,24 @@ public class TransporteTrajetoController {
         return ResponseEntity.status(HttpStatus.OK).body(transporteTrajetoService.save(transporteTrajeto));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> edit(@PathVariable(value = "id") Integer id, @RequestBody @Valid TransporteTrajetoDTO transporteTrajetoDTO) {
-        if (!transporteTrajetoService.existsById(id)) {
+    @PutMapping("/{idTransporteTrajeto}")
+    public ResponseEntity<Object> edit(@PathVariable(value = "idTransporteTrajeto") Integer idTransporteTrajeto, @RequestBody @Valid TransporteTrajetoDTO transporteTrajetoDTO) {
+        if (!transporteTrajetoService.existsById(idTransporteTrajeto)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrado nenhum transporte de um trajeto com o id informado");
         }
-        TransporteTrajeto transporteTrajeto = transporteTrajetoService.findById(id).get();
+        TransporteTrajeto transporteTrajeto = transporteTrajetoService.findById(idTransporteTrajeto).get();
         BeanUtils.copyProperties(transporteTrajetoDTO, transporteTrajeto);
+        transporteTrajeto.setIdTransporteTrajeto(idTransporteTrajeto);
 
         return ResponseEntity.status(HttpStatus.OK).body(transporteTrajetoService.save(transporteTrajeto));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteById(@PathVariable(value = "id") Integer id) {
-        if (!transporteTrajetoService.existsById(id)) {
+    @DeleteMapping("/{idTransporteTrajeto}")
+    public ResponseEntity<Object> deleteById(@PathVariable(value = "idTransporteTrajeto") Integer idTransporteTrajeto) {
+        if (!transporteTrajetoService.existsById(idTransporteTrajeto)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrado nenhum transporte de um trajeto com o id informado");
         }
-        transporteTrajetoService.deleteById(id);
+        transporteTrajetoService.deleteById(idTransporteTrajeto);
         return ResponseEntity.status(HttpStatus.OK).body("Transporte de trajeto deletado com sucesso");
     }
 }

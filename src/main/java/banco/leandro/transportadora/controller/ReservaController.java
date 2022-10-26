@@ -24,13 +24,13 @@ public class ReservaController {
         return ResponseEntity.status(HttpStatus.OK).body(reservaService.findAll());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> findById(@PathVariable(value = "id") Integer id) {
-        if(!reservaService.existsById(id)){
+    @GetMapping("/{idReserva}")
+    public ResponseEntity<Object> findById(@PathVariable(value = "idReserva") Integer idReserva) {
+        if(!reservaService.existsById(idReserva)){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrada nenhuma reserva com este ID");
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(reservaService.findById(id));
+        return ResponseEntity.status(HttpStatus.OK).body(reservaService.findById(idReserva));
     }
 
     @PostMapping
@@ -41,24 +41,25 @@ public class ReservaController {
         return ResponseEntity.status(HttpStatus.OK).body(reservaService.save(reserva));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteById(@PathVariable(value = "id") Integer id) {
-        if(!reservaService.existsById(id)){
+    @DeleteMapping("/{idReserva}")
+    public ResponseEntity<Object> deleteById(@PathVariable(value = "idReserva") Integer idReserva) {
+        if(!reservaService.existsById(idReserva)){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrada nenhuma reserva com este ID");
         }
 
-        reservaService.deleteById(id);
+        reservaService.deleteById(idReserva);
         return ResponseEntity.status(HttpStatus.OK).body("Pessoa deletada");
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@RequestBody @Valid ReservaDTO reservaDTO, @PathVariable(value = "id") Integer id) {
-        if(!reservaService.existsById(id)){
+    @PutMapping("/{idReserva}")
+    public ResponseEntity<Object> update(@RequestBody @Valid ReservaDTO reservaDTO, @PathVariable(value = "idReserva") Integer idReserva) {
+        if(!reservaService.existsById(idReserva)){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Não foi encontrada nenhuma reserva com este ID");
         }
 
-        Reserva reserva = reservaService.findById(id).get();
+        Reserva reserva = reservaService.findById(idReserva).get();
         BeanUtils.copyProperties(reservaDTO, reserva);
+        reserva.setIdReserva(idReserva);
 
         return ResponseEntity.status(HttpStatus.OK).body(reservaService.save(reserva));
     }

@@ -24,13 +24,13 @@ public class PassagemController {
         return ResponseEntity.status(HttpStatus.OK).body(passagemService.findAll());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> findById(@PathVariable(value = "id") Integer id) {
-        if(!passagemService.existsById(id)){
+    @GetMapping("/{idPassagem}")
+    public ResponseEntity<Object> findById(@PathVariable(value = "idPassagem") Integer idPassagem) {
+        if(!passagemService.existsById(idPassagem)){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrada nenhuma passagem com este ID");
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(passagemService.findById(id));
+        return ResponseEntity.status(HttpStatus.OK).body(passagemService.findById(idPassagem));
     }
 
     @PostMapping
@@ -41,25 +41,26 @@ public class PassagemController {
         return ResponseEntity.status(HttpStatus.OK).body(passagemService.save(passagem));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@RequestBody @Valid PassagemDTO passagemDTO, @PathVariable(value = "id") Integer id) {
-        if(!passagemService.existsById(id)){
+    @PutMapping("/{idPassagem}")
+    public ResponseEntity<Object> update(@RequestBody @Valid PassagemDTO passagemDTO, @PathVariable(value = "idPassagem") Integer idPassagem) {
+        if(!passagemService.existsById(idPassagem)){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Não foi encontrada nenhuma passagem com este ID");
         }
 
-        Passagem passagem = passagemService.findById(id).get();
+        Passagem passagem = passagemService.findById(idPassagem).get();
         BeanUtils.copyProperties(passagemDTO, passagem);
+        passagem.setIdPassagem(idPassagem);
 
         return ResponseEntity.status(HttpStatus.OK).body(passagemService.save(passagem));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteById(@PathVariable(value = "id") Integer id) {
-        if(!passagemService.existsById(id)){
+    @DeleteMapping("/{idPassagem}")
+    public ResponseEntity<Object> deleteById(@PathVariable(value = "idPassagem") Integer idPassagem) {
+        if(!passagemService.existsById(idPassagem)){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrada nenhuma passagem com este ID");
         }
 
-        passagemService.deleteById(id);
+        passagemService.deleteById(idPassagem);
         return ResponseEntity.status(HttpStatus.OK).body("Passagem deletada");
     }
 }

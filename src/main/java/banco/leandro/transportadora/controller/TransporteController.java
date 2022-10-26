@@ -25,12 +25,12 @@ public class TransporteController {
         return ResponseEntity.status(HttpStatus.OK).body(transporteService.findAll());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> findById(@PathVariable(value = "id") Integer id) {
-        if (!transporteService.existsById(id)) {
+    @GetMapping("/{idTransporte}")
+    public ResponseEntity<Object> findById(@PathVariable(value = "id") Integer idTransporte) {
+        if (!transporteService.existsById(idTransporte)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrado nenhum transporte com o id informado");
         }
-        return ResponseEntity.status(HttpStatus.OK).body(transporteService.findById(id));
+        return ResponseEntity.status(HttpStatus.OK).body(transporteService.findById(idTransporte));
     }
 
     @PostMapping("/{dtype}")
@@ -40,22 +40,24 @@ public class TransporteController {
         return ResponseEntity.status(HttpStatus.OK).body(transporteService.save(transporteModel));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> edit(@PathVariable(value = "id") Integer id, @RequestBody @Valid TransporteDTO transporteDTO) {
-        if (!transporteService.existsById(id)) {
+    @PutMapping("/{idTransporte}")
+    public ResponseEntity<Object> edit(@PathVariable(value = "idTransporte") Integer idTransporte, @RequestBody @Valid TransporteDTO transporteDTO) {
+        if (!transporteService.existsById(idTransporte)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrado nenhum transporte com o id informado");
         }
-        Transporte transporte = transporteService.findById(id).get();
+        Transporte transporte = transporteService.findById(idTransporte).get();
         BeanUtils.copyProperties(transporteDTO, transporte);
+        transporte.setIdTransporte(idTransporte);
+
         return ResponseEntity.status(HttpStatus.OK).body(transporteService.save(transporte));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteById(@PathVariable(value = "id") Integer id) {
-        if (!transporteService.existsById(id)) {
+    @DeleteMapping("/{idTransporte}")
+    public ResponseEntity<Object> deleteById(@PathVariable(value = "idTransporte") Integer idTransporte) {
+        if (!transporteService.existsById(idTransporte)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrado nenhum transporte com o id informado");
         }
-        transporteService.deleteById(id);
+        transporteService.deleteById(idTransporte);
         return ResponseEntity.status(HttpStatus.OK).body("Transporte deletado com sucesso");
     }
 }

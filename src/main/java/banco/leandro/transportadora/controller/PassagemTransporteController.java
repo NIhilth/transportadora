@@ -27,13 +27,13 @@ public class PassagemTransporteController {
         return ResponseEntity.status(HttpStatus.OK).body(passagemTransporteService.findAll());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> findById(@PathVariable(value = "id") Integer id) {
-        if(!passagemTransporteService.existsById(id)){
+    @GetMapping("/{idPassagemTransporte}")
+    public ResponseEntity<Object> findById(@PathVariable(value = "idPassagemTransporte") Integer idPassagemTransporte) {
+        if(!passagemTransporteService.existsById(idPassagemTransporte)){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrada nenhuma passagem de um transporte com este ID");
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(passagemTransporteService.findById(id));
+        return ResponseEntity.status(HttpStatus.OK).body(passagemTransporteService.findById(idPassagemTransporte));
     }
 
     @PostMapping
@@ -44,25 +44,26 @@ public class PassagemTransporteController {
         return ResponseEntity.status(HttpStatus.OK).body(passagemTransporteService.save(passagemTransporte));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@RequestBody @Valid PassagemTransporteDTO passagemTransporteDTO, @PathVariable(value = "id") Integer id) {
-        if(!passagemTransporteService.existsById(id)){
+    @PutMapping("/{idPassagemTransporte}")
+    public ResponseEntity<Object> update(@RequestBody @Valid PassagemTransporteDTO passagemTransporteDTO, @PathVariable(value = "idPassagemTransporte") Integer idPassagemTransporte) {
+        if(!passagemTransporteService.existsById(idPassagemTransporte)){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Não foi encontrada nenhuma passagem de um transporte com este ID");
         }
 
-        PassagemTransporte passagemTransporte = passagemTransporteService.findById(id).get();
+        PassagemTransporte passagemTransporte = passagemTransporteService.findById(idPassagemTransporte).get();
         BeanUtils.copyProperties(passagemTransporteDTO, passagemTransporte);
+        passagemTransporte.setIdPassagemTransporte(idPassagemTransporte);
 
         return ResponseEntity.status(HttpStatus.OK).body(passagemTransporteService.save(passagemTransporte));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteById(@PathVariable(value = "id") Integer id) {
-        if(!passagemTransporteService.existsById(id)){
+    @DeleteMapping("/{idPassagemTransporte}")
+    public ResponseEntity<Object> deleteById(@PathVariable(value = "idPassagemTransporte") Integer idPassagemTransporte) {
+        if(!passagemTransporteService.existsById(idPassagemTransporte)){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrada nenhuma passagem de um transporte com este ID");
         }
 
-        passagemTransporteService.deleteById(id);
+        passagemTransporteService.deleteById(idPassagemTransporte);
         return ResponseEntity.status(HttpStatus.OK).body("Passagem de transporte deletada");
     }
 }

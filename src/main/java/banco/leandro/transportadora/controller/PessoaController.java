@@ -24,13 +24,13 @@ public class PessoaController {
         return ResponseEntity.status(HttpStatus.OK).body(pessoaService.findAll());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> findById(@PathVariable(value = "id") Integer id) {
-        if(!pessoaService.existsById(id)){
+    @GetMapping("/{idPessoa}")
+    public ResponseEntity<Object> findById(@PathVariable(value = "idPessoa") Integer idPessoa) {
+        if(!pessoaService.existsById(idPessoa)){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrada nenhuma pessoa com este ID");
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(pessoaService.findById(id));
+        return ResponseEntity.status(HttpStatus.OK).body(pessoaService.findById(idPessoa));
     }
 
     @PostMapping
@@ -41,25 +41,26 @@ public class PessoaController {
         return ResponseEntity.status(HttpStatus.OK).body(pessoaService.save(pessoa));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@RequestBody @Valid PessoaDTO pessoaDTO, @PathVariable(value = "id") Integer id) {
-        if(!pessoaService.existsById(id)){
+    @PutMapping("/{idPessoa}")
+    public ResponseEntity<Object> update(@RequestBody @Valid PessoaDTO pessoaDTO, @PathVariable(value = "idPessoa") Integer idPessoa) {
+        if(!pessoaService.existsById(idPessoa)){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Não foi encontrada nenhuma pessoa com este ID");
         }
 
-        Pessoa pessoa = pessoaService.findById(id).get();
+        Pessoa pessoa = pessoaService.findById(idPessoa).get();
         BeanUtils.copyProperties(pessoaDTO, pessoa);
+        pessoa.setIdPessoa(idPessoa);
 
         return ResponseEntity.status(HttpStatus.OK).body(pessoaService.save(pessoa));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteById(@PathVariable(value = "id") Integer id) {
-        if(!pessoaService.existsById(id)){
+    @DeleteMapping("/{idPessoa}")
+    public ResponseEntity<Object> deleteById(@PathVariable(value = "idPessoa") Integer idPessoa) {
+        if(!pessoaService.existsById(idPessoa)){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrada nenhuma pessoa com este ID");
         }
 
-        pessoaService.deleteById(id);
+        pessoaService.deleteById(idPessoa);
         return ResponseEntity.status(HttpStatus.OK).body("Pessoa deletada");
     }
 }

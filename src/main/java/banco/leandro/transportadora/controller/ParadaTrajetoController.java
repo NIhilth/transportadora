@@ -53,6 +53,7 @@ public class ParadaTrajetoController {
 
         ParadaTrajeto paradaTrajeto = paradaTrajetoService.findById(idParadaTrajeto).get();
         BeanUtils.copyProperties(paradaTrajetoDto, paradaTrajeto);
+        paradaTrajeto.setIdParadaTrajeto(idParadaTrajeto);
 
         return ResponseEntity.status(HttpStatus.OK).body(paradaTrajetoService.save(paradaTrajeto));
     }

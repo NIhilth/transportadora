@@ -51,6 +51,7 @@ public class ParadaController {
 
         Parada parada = paradaService.findById(idParada).get();
         BeanUtils.copyProperties(paradaDto, parada);
+        parada.setIdParada(idParada);
 
         return ResponseEntity.status(HttpStatus.OK).body(paradaService.save(parada));
     }
