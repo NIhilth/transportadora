@@ -21,12 +21,12 @@ public class ParadaController {
         this.paradaService = paradaService;
     }
 
-    @GetMapping("/listar")
+    @GetMapping
     public ResponseEntity<List<Parada>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(paradaService.findAll());
     }
 
-    @GetMapping("/listar/{idParada}")
+    @GetMapping("/{idParada}")
     public ResponseEntity<Object> findById(@PathVariable(value = "idParada") Integer idParada) {
         if (!paradaService.existsById(idParada)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrado nenhuma parada com o ID informado");
@@ -35,33 +35,27 @@ public class ParadaController {
         return ResponseEntity.status(HttpStatus.OK).body(paradaService.findById(idParada));
     }
 
-    @PostMapping("/cadastrar")
+    @PostMapping
     public ResponseEntity<Object> save(@RequestBody @Valid ParadaDTO paradaDto) {
-        if (paradaService.existsById(paradaDto.getIdParada())) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("ID já cadastrado");
-        }
-
         Parada parada = new Parada();
         BeanUtils.copyProperties(paradaDto, parada);
 
-        paradaService.save(parada);
-        return ResponseEntity.status(HttpStatus.OK).body("Parada cadastrada com sucesso!");
+        return ResponseEntity.status(HttpStatus.OK).body(paradaService.save(parada));
     }
 
-    @PutMapping("/editar/{idParada}")
+    @PutMapping("/{idParada}")
     public ResponseEntity<Object> update(@PathVariable(value = "idParada") Integer idParada, @Valid @RequestBody ParadaDTO paradaDto) {
         if (!paradaService.existsById(idParada)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrado nenhuma parada com o ID informado");
         }
 
-        Parada parada = paradaService.findById(paradaDto.getIdParada()).get();
+        Parada parada = paradaService.findById(idParada).get();
         BeanUtils.copyProperties(paradaDto, parada);
 
-        paradaService.save(parada);
-        return ResponseEntity.status(HttpStatus.OK).body("Parada editada com sucesso!");
+        return ResponseEntity.status(HttpStatus.OK).body(paradaService.save(parada));
     }
 
-    @DeleteMapping("/excluir/{idParada}")
+    @DeleteMapping("/{idParada}")
     public ResponseEntity<Object> deleteById(@PathVariable(value = "idParada") Integer idParada) {
         if (!paradaService.existsById(idParada)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi encontrado nenhuma parada com o ID informado!");

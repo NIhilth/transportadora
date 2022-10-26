@@ -21,6 +21,7 @@ public class PassagemTransporte {
     private Integer acento;
 
     @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
     private Estado estado;
 
     @ManyToOne
